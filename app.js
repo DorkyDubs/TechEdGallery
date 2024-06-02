@@ -148,7 +148,7 @@ function createThumbnails(myImageArray) {
       backgroundImage.src = thumbnail.src;
       backgroundImage.alt = thumbnail.alt;
       thumbnailArray.forEach((arrayThumbnail, index) => {
-        // restores thumb borders, maybe a simpler solution but query selectors just returned empty
+        // restores thumb borders, maybe a simpler solution but query selectors just returned empty. Done due to not knowing if light colours would show up on rhino hide. after implementation not sure it was necessary, but not a designer. left in to show I can both do and consder such things, although it disables css :active pseudo after first click :(
         arrayThumbnail.style.border = "0.5px solid rgb(190, 184, 184)";
         //arrayThumbnail.ariaLabel = null;
         // to restore alt and avoid screen reader lying.
@@ -223,8 +223,8 @@ if (mobile !== true) {
   let browserButtonSize = innerHeight / 10;
   let browserButtonSizeString = `${browserButtonSize}px`; //long winded but easier if you want to change ratios
   let buttonRight = document.createElement("button");
-  buttonRight.textContent = "▷"; /// Sadly these don't scale with element or font size, hope  something
-  buttonRight.className = "button-right"; //better in the future.
+  buttonRight.textContent = "▷";
+  buttonRight.className = "button-right";
   buttonRight.ariaLabel = "Move to next image.";
   document.body.appendChild(buttonRight);
   imageForward(buttonRight);
@@ -249,18 +249,3 @@ if (mobile !== true) {
 }
 
 thumbnailContainer.style.bottom = `${spacing - 60}px`; // need to replace 60 with size of buttons
-
-//issue -> the images appear one after the other (innerHTML="null") might help solve.
-//creat img element
-// newMainImg = document.createElement("img");
-// newMainImg.className = ".mainImage";
-// newMainImg.src = gallery[0].src;
-// newMainImg.alt = gallery[0].alt;
-// newMainImg.width = gallery[0].width;
-// newMainImg.height = gallery[0].height;
-
-// mainContainer.appendChild(newMainImg);
-//opiotnal: add classname
-//set the src value
-//set the alt value
-//append main image to the dom
