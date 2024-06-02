@@ -1,0 +1,90 @@
+@import url("https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css");
+
+* {
+  background-color: rgb(14, 3, 57);
+}
+button {
+  background-color: transparent;
+  color: azure;
+  border-color: aliceblue;
+  border-width: 2px;
+  border-radius: 100%; /* wrap 100 to provide contrast/depth to button */
+}
+button:active {
+  border-color: rgb(244, 162, 153);
+  color: rgb(244, 162, 153);
+}
+
+#background-Image {
+  /* position: relative; */
+  z-index: 2;
+  height: 100vh;
+}
+
+.thumbImg {
+  border: 1px solid rgb(190, 184, 184);
+}
+
+#thumbnail-container {
+  position: fixed;
+  display: flex;
+  z-index: 3;
+}
+@media (min-width: 501px) {
+  #thumbnail-container {
+    flex-direction: row;
+    justify-content: center;
+    top: 10px;
+    width: 100vw;
+    background-color: transparent;
+  }
+  .thumbImg {
+    width: 130px;
+    height: 100px;
+    border-color: 1px solid rgb(190, 184, 184);
+  }
+  .button-left {
+    font-size: x-large;
+  }
+  .button-right {
+    font-size: x-large;
+  }
+}
+
+@media (max-width: 500px) {
+  * {
+    background-color: rgb(5, 1, 28);
+  }
+  #background-Image {
+    width: 100vw;
+    height: 100vw;
+  }
+  #thumbnail-container {
+    top: 30%;
+
+    height: auto;
+    /* justify-content: space-around; */
+    flex-direction: column;
+    background-color: transparent;
+  }
+  .thumbImg {
+    /* width: 40px; */
+    /* height: 40px; */
+    border: 0.5px solid rgb(190, 184, 184);
+    border-color: rgb(190, 184, 184);
+    /* border-width: 0.5px; */
+    /* border-style: solid; */
+    border-radius: 15%;
+  }
+
+  .button-up {
+    width: 24px;
+    height: 24px;
+    text-align: center;
+  }
+  .button-down {
+    width: 24px;
+    height: 24px;
+    text-align: left;
+  }
+}
