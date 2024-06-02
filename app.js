@@ -9,7 +9,7 @@ let images = [
     srcThumbSmall: "./assets/thumbs/smallThumbs/CowThumbSmall.jpg",
     srcThumb: "./assets/thumbs/CowThumb.jpg",
     alt: "A Beautiful Bovine staring to the east.",
-    altThumb: "Thumbnail of a cow image",
+    altThumb: "Thumbnail of a cow.",
   },
   {
     name: "pig",
@@ -17,8 +17,8 @@ let images = [
     srcSmall: "./assets/small_Img/pig_mobile.jpg",
     srcThumb: "./assets/thumbs/pigThumb.jpg",
     srcThumbSmall: "./assets/thumbs/smallThumbs/pigThumbSmall.jpg",
-    alt: "A Hog having a lie down on the beach",
-    altThumb: "Thumbnail of a hog image",
+    alt: "A Hog having a lie down on the beach.",
+    altThumb: "Thumbnail of a wildhogs.",
   },
   {
     name: "rhino",
@@ -26,8 +26,8 @@ let images = [
     srcSmall: "./assets/small_Img/rhino_mobile.jpg",
     srcThumb: `./assets/thumbs/rhinoThumb.jpg`,
     srcThumbSmall: "./assets/thumbs/smallThumbs/rhinoThumbSmall.jpg",
-    alt: "A really cool looking Rhino enjoying the sun",
-    altThumb: "Thumbnail of a rhino image",
+    alt: "A really cool looking Rhino enjoying the sun.",
+    altThumb: "Thumbnail of a rhino.",
   },
   {
     name: "dogs",
@@ -35,8 +35,8 @@ let images = [
     srcSmall: "./assets/small_Img/dogs_mobile.jpg",
     srcThumb: `./assets/thumbs/dogsThumb.jpg`,
     srcThumbSmall: "./assets/thumbs/smallThumbs/dogsThumbSmall.jpg",
-    alt: "Family of dogs exploring the coast",
-    altThumb: "Thumbnail of an image of dogs",
+    alt: "Family of dogs exploring the coast.",
+    altThumb: "Thumbnail of dogs at the beach.",
   },
 ];
 
@@ -68,7 +68,7 @@ function imageForward(requiredButton) {
       newIndex = currentIndex + 1;
     }
     if (mobile === true) {
-      backgroundImage.src = images[newIndex].src; //Small;
+      backgroundImage.src = images[newIndex].srcSmall;
     } else {
       backgroundImage.src = images[newIndex].src;
     }
@@ -89,7 +89,7 @@ function imageBack(requiredButton) {
       newIndex = currentIndex - 1;
     }
     if (mobile === true) {
-      backgroundImage.src = images[newIndex].src; //Small;
+      backgroundImage.src = images[newIndex].srcSmall;
     } else {
       backgroundImage.src = images[newIndex].src;
     }
@@ -133,6 +133,7 @@ function createThumbnails(myImageArray) {
     }
 
     newThumb.alt = thumbnail.altThumb;
+    newThumb.ariaLabel = thumbnail.altThumb;
     if (mobile === true) {
       let mobileThumbDimension = `${innerHeight / 12}px`; //want square thumbs to avoid stretching so use same
       newThumb.style.height = mobileThumbDimension; //measurement for both
@@ -140,20 +141,22 @@ function createThumbnails(myImageArray) {
     }
     newThumb.className = "thumbImg";
     newThumb.tabIndex = `${index + 2}`; // don't know why these wouldn't tab in initially. This solves it
-    console.log(newThumb.tabIndex); // but if anyone knows why it was an issue please share the knowledge.
-
-    thumbnailContainer.appendChild(newThumb); //append the new elelment to the DOMusing a doc. method
+    thumbnailContainer.appendChild(newThumb); // but if anyone knows why it was an issue please share the knowledge.
     thumbnailArray.push(newThumb);
-    //worth adding event listener here
-    //thumbnail.addEventListener;
+
     newThumb.addEventListener("click", () => {
       backgroundImage.src = thumbnail.src;
       backgroundImage.alt = thumbnail.alt;
       thumbnailArray.forEach((arrayThumbnail, index) => {
-        // restores original border to everyother Thumbnail/aside from the one clicked// no doubt a simpler and less slow method to achieve this but couldn't mnage with query selector, classes were just left empty
+        // restores thumb borders, maybe a simpler solution but query selectors just returned empty
         arrayThumbnail.style.border = "0.5px solid rgb(190, 184, 184)";
+        //arrayThumbnail.ariaLabel = null;
+        // to restore alt and avoid screen reader lying.
       });
       newThumb.style.border = "2px solid cyan";
+      // newThumb.ariaLabel = "This is the current image";
+      // wanted to string literal with .altThumb text but kept returning empty. This replaces alt description so not sure which was more useful. needs line 152 if running uncommented to try it out
+
       currentIndex = index;
       console.log(currentIndex);
       rightButtonVisibilityCheck();
@@ -169,14 +172,16 @@ function createThumbnails(myImageArray) {
     buttonDiv.style.background = "transparent";
     buttonDiv.style.height = "70px";
     let buttonUp = document.createElement("button");
-    buttonUp.textContent = "△"; //These won't center to the button. it's sort of ugly and not sure how
+    buttonUp.textContent = "↟"; //These won't center to the button. it's sort of ugly and not sure how
     buttonUp.className = "button-up"; //to fix it yet.
+    buttonUp.ariaLabel = "Move to previous image.";
     buttonDiv.appendChild(buttonUp);
     imageBack(buttonUp);
     // click event here plz , can be done via a function maybe?
     let buttonDown = document.createElement("button");
-    buttonDown.textContent = "▽";
+    buttonDown.textContent = "↡";
     buttonDown.className = "button-down";
+    buttonDown.ariaLabel = "Move to next image.";
     buttonDiv.appendChild(buttonDown);
     imageForward(buttonDown);
     // click event here plz , can be via a function maybe?
@@ -220,6 +225,7 @@ if (mobile !== true) {
   let buttonRight = document.createElement("button");
   buttonRight.textContent = "▷"; /// Sadly these don't scale with element or font size, hope  something
   buttonRight.className = "button-right"; //better in the future.
+  buttonRight.ariaLabel = "Move to next image.";
   document.body.appendChild(buttonRight);
   imageForward(buttonRight);
   buttonRight.style.position = "fixed";
@@ -231,6 +237,7 @@ if (mobile !== true) {
   let buttonLeft = document.createElement("button");
   buttonLeft.textContent = "◁";
   buttonLeft.className = "button-left";
+  buttonLeft.ariaLabel = "Move to previous image.";
   document.body.appendChild(buttonLeft);
   buttonLeft.style.position = "fixed";
   buttonLeft.style.left = "5px";
